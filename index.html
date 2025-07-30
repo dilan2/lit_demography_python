@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ваше будущее в IT начинается здесь | LearnIT Poland</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        // Немедленно применяем тему, чтобы избежать мерцания (FOUC)
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 400px;
+            width: 100%;
+        }
+        .theme-aware {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 theme-aware">
+
+    <div class="container mx-auto p-4 md:p-8 relative">
+
+        <!-- Кнопка переключения темы -->
+        <div class="absolute top-4 right-4 z-10">
+            <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+            </button>
+        </div>
+
+        <!-- Заголовок -->
+        <header class="text-center mb-12 pt-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Вы в своей тарелке в мире IT</h1>
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">Анализ данных показывает: наши студенты и успешные IT-специалисты в Польше — это люди, похожие на вас. Посмотрите на факты и убедитесь, что ваш путь в IT реален как никогда.</p>
+        </header>
+
+        <main class="space-y-16">
+
+            <!-- Секция 1: Возраст -->
+            <section class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-xl shadow-md theme-aware">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-center text-gray-900 dark:text-white">Возраст — не барьер, а преимущество</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6 text-center max-w-2xl mx-auto">Большинство IT-специалистов и наших студентов находятся в самом расцвете сил (25-35 лет). При этом молодежь активно входит в сферу через обучение, доказывая, что начинать можно и нужно в любом возрасте.</p>
+                <div class="chart-container">
+                    <canvas id="ageChart"></canvas>
+                </div>
+                <p class="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">Сравнение возрастного распределения студентов и IT-специалистов.</p>
+            </section>
+
+            <!-- Секция 2: Гендер -->
+            <section class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-xl shadow-md theme-aware">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-center text-gray-900 dark:text-white">Женщины уверенно завоевывают IT</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6 text-center max-w-2xl mx-auto">Гендерный баланс в IT меняется. В Польше доля женщин (16-18%) выше, чем во многих странах Европы, и более 42% из них пришли в IT, сменив профессию. Ваш пол не имеет значения, важны лишь ваши амбиции.</p>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="chart-container h-64 md:h-80">
+                        <canvas id="genderChartStudents"></canvas>
+                        <p class="text-center text-sm text-gray-500 dark:text-gray-400 mt-2">Студенты курсов</p>
+                    </div>
+                    <div class="chart-container h-64 md:h-80">
+                        <canvas id="genderChartSpecialists"></canvas>
+                        <p class="text-center text-sm text-gray-500 dark:text-gray-400 mt-2">IT-специалисты</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Секция 3: Образование -->
+            <section class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-xl shadow-md theme-aware">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-center text-gray-900 dark:text-white">Диплом — не главное. Главное — навыки</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6 text-center max-w-2xl mx-auto">Почти 40% как студентов, так и специалистов имеют высшее образование, но IT-сфера открыта для всех. Более половины женщин в IT не имели технического образования, а 22% освоили все самостоятельно. Это доказывает: наши курсы — ваш прямой путь к цели.</p>
+                <div class="chart-container">
+                    <canvas id="educationChart"></canvas>
+                </div>
+            </section>
+            
+            <!-- Секция 4: Доход -->
+            <section class="bg-gradient-to-r from-blue-500 to-indigo-600 dark:from-blue-800 dark:to-indigo-900 text-white p-6 md:p-8 rounded-xl shadow-lg theme-aware">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-center">Увеличьте свой доход в 2-3 раза</h2>
+                <p class="mb-6 text-center max-w-2xl mx-auto text-indigo-100 dark:text-indigo-200">Финансовая мотивация — одна из ключевых. Посмотрите, как меняется уровень дохода после входа в IT. Это не просто цифры, это реальная возможность изменить свою жизнь.</p>
+                <div class="bg-white/10 dark:bg-black/20 p-4 rounded-lg">
+                    <div class="chart-container">
+                        <canvas id="incomeChart"></canvas>
+                    </div>
+                </div>
+                <p class="text-center text-sm text-indigo-200 dark:text-indigo-300 mt-4">Сравнение доходов до и после входа в IT (PLN, брутто/мес).</p>
+            </section>
+
+            <!-- Секция 5: География -->
+            <section class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-xl shadow-md theme-aware">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-center text-gray-900 dark:text-white">IT-карьера доступна по всей Польше</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6 text-center max-w-2xl mx-auto">Хотя IT-специалисты сконцентрированы в крупных городах, наши студенты учатся со всех уголков страны. Онлайн-формат стирает границы и дает равные шансы, где бы вы ни жили.</p>
+                <div class="chart-container">
+                    <canvas id="geoChart"></canvas>
+                </div>
+                 <p class="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">Основные IT-хабы и распределение студентов.</p>
+            </section>
+            
+            <!-- Секция 6: Мотивация -->
+            <section class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-xl shadow-md theme-aware">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-center text-gray-900 dark:text-white">Что движет будущими IT-звездами?</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6 text-center max-w-2xl mx-auto">Высокая зарплата, гибкость и возможность удаленной работы — вот что привлекает людей в IT. Если вы разделяете эти ценности, вы на правильном пути. 43% наших студентов меняют профессию — и у них получается.</p>
+                <div class="chart-container">
+                    <canvas id="motivationChart"></canvas>
+                </div>
+            </section>
+            
+            <!-- Секция 7: Барьеры -->
+            <section class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-xl shadow-md theme-aware">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-center text-gray-900 dark:text-white">Преодолеем барьеры вместе</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-8 text-center max-w-3xl mx-auto">Многих останавливают одни и те же страхи и сомнения. Мы в LearnIT знаем об этом и разработали систему поддержки, которая поможет вам на каждом шагу.</p>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="chart-container">
+                        <canvas id="barriersChart"></canvas>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg theme-aware">
+                            <h3 class="font-bold text-lg text-gray-800 dark:text-gray-100">Барьер: "Не знаю, с чего начать" (60%)</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mt-1"><span class="font-semibold text-indigo-500 dark:text-indigo-400">Наше решение:</span> Предлагаем бесплатные консультации и карьерное ориентирование. Наши курсы имеют четкую структуру от простого к сложному, вам не придется гадать, что учить дальше.</p>
+                        </div>
+                        <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg theme-aware">
+                            <h3 class="font-bold text-lg text-gray-800 dark:text-gray-100">Барьер: "Это слишком дорого" (33%)</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mt-1"><span class="font-semibold text-indigo-500 dark:text-indigo-400">Наше решение:</span> Предоставляем гибкие варианты оплаты и рассрочку. Помните, что это инвестиция, которая окупается в 2-3 раза уже на первой работе в IT.</p>
+                        </div>
+                        <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg theme-aware">
+                            <h3 class="font-bold text-lg text-gray-800 dark:text-gray-100">Барьер: "Боюсь, что не получится" (25%)</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mt-1"><span class="font-semibold text-indigo-500 dark:text-indigo-400">Наше решение:</span> Попробуйте без риска! Если в течение первых 2 недель вы поймете, что курс вам не подходит, мы вернем полную стоимость. Плюс, вас всегда поддержит личный ментор и сообщество.</p>
+                        </div>
+                        <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg theme-aware">
+                            <h3 class="font-bold text-lg text-gray-800 dark:text-gray-100">Барьер: "Мало вакансий для Junior" (20%)</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mt-1"><span class="font-semibold text-indigo-500 dark:text-indigo-400">Наше решение:</span> Мы не просто учим — мы помогаем найти работу. Наш карьерный центр поможет составить сильное CV, а на занятиях с рекрутером вы научитесь оформлять профили в соцсетях, искать вакансии и проходить собеседования. Информацию о лучших выпускниках мы рассылаем напрямую нашим компаниям-партнерам.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- DOM Elements & Config ---
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const charts = {};
+    const chartColors = {
+        students: 'rgba(79, 70, 229, 0.8)',
+        specialists: 'rgba(59, 130, 246, 0.8)',
+        studentsBg: 'rgba(79, 70, 229, 0.5)',
+        specialistsBg: 'rgba(59, 130, 246, 0.5)',
+        accent1: 'rgba(239, 68, 68, 0.8)',
+        accent2: 'rgba(245, 158, 11, 0.8)',
+        accent3: 'rgba(16, 185, 129, 0.8)',
+    };
+    const lightThemeColors = { font: '#374151', grid: 'rgba(0, 0, 0, 0.1)' };
+    const darkThemeColors = { font: '#d1d5db', grid: 'rgba(255, 255, 255, 0.1)' };
+
+    // --- Theme Management ---
+    const updateAllChartsTheme = () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        const theme = isDark ? darkThemeColors : lightThemeColors;
+        Chart.defaults.color = theme.font;
+
+        Object.values(charts).forEach(chart => {
+            const options = chart.options;
+            if (options.scales) {
+                ['x', 'y'].forEach(axis => {
+                    if (options.scales[axis]) {
+                        options.scales[axis].ticks.color = theme.font;
+                        options.scales[axis].grid.color = theme.grid;
+                        if (options.scales[axis].title) options.scales[axis].title.color = theme.font;
+                    }
+                });
+            }
+            if (options.plugins.legend) options.plugins.legend.labels.color = theme.font;
+            if (chart.canvas.id === 'incomeChart') {
+                options.scales.x.ticks.color = '#fff';
+                options.scales.y.ticks.color = '#fff';
+                options.scales.x.title.color = '#fff';
+            }
+            chart.update();
+        });
+    };
+
+    const applyTheme = (theme) => {
+        const isDark = theme === 'dark';
+        document.documentElement.classList.toggle('dark', isDark);
+        themeToggleDarkIcon.classList.toggle('hidden', isDark);
+        themeToggleLightIcon.classList.toggle('hidden', !isDark);
+        updateAllChartsTheme();
+    };
+
+    const toggleTheme = () => {
+        const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+        localStorage.setItem('theme', newTheme);
+        applyTheme(newTheme);
+    };
+
+    // --- Chart Initialization ---
+    const genderOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: true, position: 'bottom' }, tooltip: { callbacks: { label: (c) => `${c.label}: ${c.formattedValue}%` } } } };
+    
+    charts.ageChart = new Chart(document.getElementById('ageChart'), { type: 'bar', data: { labels: ['16-24', '25-34', '35-44', '45+'], datasets: [{ label: 'Студенты курсов (%)', data: [30, 45, 20, 5], backgroundColor: chartColors.studentsBg, borderColor: chartColors.students, borderWidth: 1 }, { label: 'IT-специалисты (%)', data: [15, 55, 25, 5], backgroundColor: chartColors.specialistsBg, borderColor: chartColors.specialists, borderWidth: 1 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: 'Процент от общего числа' } } }, plugins: { tooltip: { callbacks: { label: (c) => `${c.dataset.label}: ${c.formattedValue}%` } } } } });
+    charts.genderChartStudents = new Chart(document.getElementById('genderChartStudents'), { type: 'doughnut', data: { labels: ['Мужчины', 'Женщины'], datasets: [{ data: [82, 18], backgroundColor: [chartColors.specialists, chartColors.accent1], hoverOffset: 4 }] }, options: genderOptions });
+    charts.genderChartSpecialists = new Chart(document.getElementById('genderChartSpecialists'), { type: 'doughnut', data: { labels: ['Мужчины', 'Женщины'], datasets: [{ data: [84, 16], backgroundColor: [chartColors.specialists, chartColors.accent1], hoverOffset: 4 }] }, options: genderOptions });
+    charts.educationChart = new Chart(document.getElementById('educationChart'), { type: 'bar', data: { labels: ['Высшее', 'Среднее/Техническое', 'Другое'], datasets: [{ label: 'Студенты курсов (%)', data: [40, 35, 25], backgroundColor: chartColors.studentsBg, borderColor: chartColors.students, borderWidth: 1 }, { label: 'IT-специалисты (%)', data: [39, 31, 30], backgroundColor: chartColors.specialistsBg, borderColor: chartColors.specialists, borderWidth: 1 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: 'Процент от общего числа' } } }, plugins: { tooltip: { callbacks: { label: (c) => `${c.dataset.label}: ${c.formattedValue}%` } } } } });
+    charts.incomeChart = new Chart(document.getElementById('incomeChart'), { type: 'bar', data: { labels: ['Текущий доход (студенты)', 'Junior Python', 'Mid Python', 'Senior Python', 'Senior DevOps'], datasets: [{ label: 'Средний доход (PLN брутто)', data: [9000, 6500, 15500, 24000, 32000], backgroundColor: ['rgba(255, 255, 255, 0.4)', 'rgba(16, 185, 129, 0.6)', 'rgba(16, 185, 129, 0.8)', 'rgba(16, 185, 129, 1.0)', 'rgba(245, 158, 11, 1.0)'], borderColor: ['rgba(255, 255, 255, 0.8)', chartColors.accent3, chartColors.accent3, chartColors.accent3, chartColors.accent2], borderWidth: 2 }] }, options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', scales: { x: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.2)' }, ticks: { color: '#fff' }, title: { display: true, text: 'PLN в месяц (брутто)', color: '#fff' } }, y: { ticks: { color: '#fff' } } }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => ` ${c.formattedValue} PLN` } } } } });
+    charts.geoChart = new Chart(document.getElementById('geoChart'), { type: 'bar', data: { labels: ['Варшава', 'Краков', 'Вроцлав', 'Труймясто', 'Познань', 'Катовице', 'Другие регионы'], datasets: [{ label: 'Студенты курсов (%)', data: [15, 10, 8, 7, 5, 5, 50], backgroundColor: chartColors.studentsBg, borderColor: chartColors.students, borderWidth: 1 }, { label: 'IT-специалисты (%)', data: [25, 15, 12, 8, 5, 5, 30], backgroundColor: chartColors.specialistsBg, borderColor: chartColors.specialists, borderWidth: 1 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, title: { display: true, text: 'Процент от общего числа' } } }, plugins: { tooltip: { callbacks: { label: (c) => `${c.dataset.label}: ${c.formattedValue}%` } } } } });
+    charts.motivationChart = new Chart(document.getElementById('motivationChart'), { type: 'bar', data: { labels: ['Рост зарплаты', 'Гибкий график', 'Удаленная работа', 'Интеллектуальный вызов', 'Смена профессии', 'Хобби/Развитие'], datasets: [{ label: 'Процент опрошенных', data: [78, 65, 58, 45, 43, 22], backgroundColor: [chartColors.students, chartColors.specialists, chartColors.specialists, chartColors.accent2, chartColors.accent1, chartColors.accent3], borderWidth: 0 }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => ` ${c.formattedValue}%` } } }, scales: { x: { title: { display: true, text: 'Процент опрошенных' } } } } });
+    charts.barriersChart = new Chart(document.getElementById('barriersChart'), { type: 'bar', data: { labels: ['Не знают, с чего начать', 'Финансовые барьеры', 'Страх перемен', 'Мало вакансий для Junior'], datasets: [{ label: 'Процент опрошенных', data: [60, 33, 25, 20], backgroundColor: [ chartColors.accent1, chartColors.accent2, chartColors.specialists, chartColors.students ], borderWidth: 0 }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => ` ${c.formattedValue}%` } } }, scales: { x: { title: { display: true, text: 'Процент опрошенных' } } } } });
+    
+    // --- Initial Run ---
+    const initialTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(initialTheme);
+    themeToggleBtn.addEventListener('click', toggleTheme);
+});
+</script>
+
+</body>
+</html>
